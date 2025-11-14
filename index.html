@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Literary Haven - Book Quotes & Recommendations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --dark: #2c3e50;
+            --light: #f8f9fa;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --danger: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--dark) 0%, #34495e 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" opacity="0.1"><path fill="white" d="M23 18c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7zm54 0c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7zm-27 0c-4 0-7 3-7 7s3 7 7 7 7-3 7-7-3-7-7-7z"/></svg>');
+        }
+
+        .header h1 {
+            font-size: 3.2em;
+            margin-bottom: 15px;
+            font-weight: 700;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .download-btn {
+            display: inline-block;
+            margin-top: 25px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--primary) 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            text-decoration: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        .content {
+            padding: 40px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .main-content {
+            grid-column: 1 / -1;
+        }
+
+        .book-quote {
+            background: var(--light);
+            padding: 35px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            border-left: 8px solid var(--primary);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .book-quote:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .book-quote::before {
+            content: '"';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 120px;
+            color: rgba(102, 126, 234, 0.1);
+            font-family: Georgia, serif;
+            line-height: 1;
+        }
+
+        .quote-text {
+            font-size: 1.5em;
+            line-height: 1.7;
+            color: var(--dark);
+            font-style: italic;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            text-align: right;
+            font-weight: bold;
+            color: var(--primary);
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .quote-author::before {
+            content: '';
+            flex-grow: 1;
+            height: 1px;
+            background: #e9ecef;
+            margin-right: 15px;
+        }
+
+        .book-recommendation {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .book-recommendation:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.15);
+        }
+
+        .book-cover {
+            width: 100px;
+            height: 140px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2em;
+            flex-shrink: 0;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .book-info {
+            flex-grow: 1;
+        }
+
+        .book-title {
+            font-size: 1.4em;
+            color: var(--dark);
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        .book-author {
+            color: #6c757d;
+            margin-bottom: 12px;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+
+        .book-description {
+            line-height: 1.6;
+            color: #495057;
+            margin-bottom: 15px;
+        }
+
+        .book-meta {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+            color: #6c757d;
+        }
+
+        .book-meta span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .refresh-indicator {
+            text-align: center;
+            padding: 25px;
+            background: var(--light);
+            margin-top: 30px;
+            border-radius: 15px;
+            font-size: 1em;
+            color: #6c757d;
+            border: 2px dashed #e9ecef;
+        }
+
+        .loading-bar {
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            width: 0%;
+            transition: width 1s linear;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 20px 0 0 0;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 40px;
+            padding: 25px;
+            background: var(--light);
+            border-radius: 15px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.95em;
+            color: #6c757d;
+            font-weight: 500;
+        }
+
+        .interaction-container {
+            margin: 25px 0;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .interaction-container:hover {
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.15);
+            transform: translateY(-3px);
+        }
+
+        .interaction-placeholder {
+            color: #6c757d;
+            font-style: italic;
+            font-size: 1.1em;
+        }
+
+        /* Reaction buttons styles */
+        .reaction-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 25px 0;
+        }
+
+        .reaction-btn {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 50px;
+            padding: 12px 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #495057;
+            font-size: 1em;
+        }
+
+        .reaction-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        .reaction-btn.like:hover {
+            border-color: var(--danger);
+            color: var(--danger);
+        }
+
+        .reaction-btn.share:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .reaction-btn.save:hover {
+            border-color: var(--success);
+            color: var(--success);
+        }
+
+        /* Close notification styles */
+        .close-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--danger);
+            color: white;
+            padding: 18px 24px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+            z-index: 1000;
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+            font-weight: 600;
+        }
+
+        .close-notification.show {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Website list styles */
+        .website-list {
+            background: var(--light);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px dashed #e9ecef;
+        }
+
+        .website-list h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
+            font-size: 1.4em;
+        }
+
+        .website-items {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .website-item {
+            background: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            border: 2px solid #e9ecef;
+            font-size: 0.95em;
+            color: #495057;
+            transition: all 0.3s ease;
+        }
+
+        .website-item:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+
+        /* Timer display */
+        .timer-display {
+            text-align: center;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--dark), #34495e);
+            color: white;
+            border-radius: 15px;
+            font-size: 1.2em;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .timer-display span {
+            font-weight: bold;
+            color: var(--accent);
+            font-size: 1.3em;
+        }
+
+        /* Featured books section */
+        .featured-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+
+        .featured-book {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .featured-book:hover {
+            transform: translateY(-8px);
+        }
+
+        .featured-book-cover {
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5em;
+        }
+
+        .featured-book-info {
+            padding: 20px;
+        }
+
+        .featured-book-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--dark);
+            margin-bottom: 8px;
+        }
+
+        .featured-book-author {
+            color: #6c757d;
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+
+        .featured-book-rating {
+            color: var(--warning);
+            margin-bottom: 10px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 25px;
+            background: var(--light);
+            color: #6c757d;
+            border-top: 1px solid #e9ecef;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Close notification -->
+    <div class="close-notification" id="closeNotification">
+        <i class="fas fa-exclamation-triangle"></i>
+        This tab will close in <span id="closeCountdown">1</span> second...
+    </div>
+
+    <div class="container">
+        <div class="loading-bar" id="loadingBar"></div>
+        
+        <div class="header">
+            <h1><i class="fas fa-book-open"></i> Literary Haven</h1>
+            <p>Discover inspiring book quotes, recommendations, and literary treasures</p>
+            <a href="https://demolitionzerostomach.com/tx63x8vx92?key=f18d3544852ffd3975f55329e0d5bf1b" class="download-btn">
+                <i class="fas fa-download"></i> Download Qutoea Now
+            </a>
+        </div>
+
+        <div class="content">
+            <!-- Timer Display -->
+            <div class="timer-display">
+                <i class="fas fa-clock"></i> Next website opens in: <span id="nextWebsiteTimer">15</span> seconds
+            </div>
+
+            <!-- Website List -->
+            <div class="website-list">
+                <h3><i class="fas fa-globe"></i> Featured Website</h3>
+                <div class="website-items">
+                    <div class="website-item">directmoney.pages.dev</div>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Quote of the Day -->
+                <div class="book-quote fade-in" id="currentQuote">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+
+                <!-- Featured Books -->
+                <div class="featured-books">
+                    <div class="featured-book">
+                        <div class="featured-book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="featured-book-info">
+                            <div class="featured-book-title">The Midnight Library</div>
+                            <div class="featured-book-author">Matt Haig</div>
+                            <div class="featured-book-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="featured-book">
+                        <div class="featured-book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="featured-book-info">
+                            <div class="featured-book-title">Project Hail Mary</div>
+                            <div class="featured-book-author">Andy Weir</div>
+                            <div class="featured-book-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="featured-book">
+                        <div class="featured-book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="featured-book-info">
+                            <div class="featured-book-title">Klara and the Sun</div>
+                            <div class="featured-book-author">Kazuo Ishiguro</div>
+                            <div class="featured-book-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Reaction Buttons -->
+                <div class="reaction-buttons">
+                    <button class="reaction-btn like" id="likeBtn">
+                        <i class="fas fa-thumbs-up"></i> Like
+                    </button>
+                    <button class="reaction-btn share" id="shareBtn">
+                        <i class="fas fa-share-alt"></i> Share
+                    </button>
+                    <button class="reaction-btn save" id="saveBtn">
+                        <i class="fas fa-bookmark"></i> Save
+                    </button>
+                </div>
+
+                <!-- Interaction Container -->
+                <div class="interaction-container" id="interactionContainer">
+                    <div class="interaction-placeholder">
+                        <i class="fas fa-mouse-pointer"></i> Click here for more literary insights
+                    </div>
+                </div>
+
+                <!-- Book Recommendations -->
+                <div class="book-recommendation fade-in" id="bookRecommendation">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+
+                <!-- Stats -->
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number" id="booksDisplayed">0</div>
+                        <div class="stat-label">Books Featured</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="quotesShown">0</div>
+                        <div class="stat-label">Quotes Shared</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="lastUpdate">0s</div>
+                        <div class="stat-label">Last Update</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="pageViews">1</div>
+                        <div class="stat-label">Page Views</div>
+                    </div>
+                </div>
+
+                <div class="refresh-indicator">
+                    <p><i class="fas fa-sync-alt"></i> New content loading in <span id="countdown">10</span> seconds...</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 Literary Haven. Discover the world through books.</p>
+        </div>
+    </div>
+
+<script>
+    // Target website
+    const targetWebsite = "https://directmoney.pages.dev/";
+
+    // Timer functionality
+    let autoOpenInterval = null;
+    let closeTabTimeout = null;
+    let websiteTimerInterval = null;
+    let timeUntilNextWebsite = 10; // CHANGED: 10 seconds delay instead of 15
+
+    // Book database with expanded content
+    const bookDatabase = {
+        quotes: [
+            {
+                text: "It is only with the heart that one can see rightly; what is essential is invisible to the eye.",
+                author: "Antoine de Saint-Exupéry",
+                book: "The Little Prince"
+            },
+            {
+                text: "So we beat on, boats against the current, borne back ceaselessly into the past.",
+                author: "F. Scott Fitzgerald",
+                book: "The Great Gatsby"
+            },
+            {
+                text: "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+                author: "Jane Austen",
+                book: "Pride and Prejudice"
+            },
+            {
+                text: "All happy families are alike; each unhappy family is unhappy in its own way.",
+                author: "Leo Tolstoy",
+                book: "Anna Karenina"
+            },
+            {
+                text: "The only way out is through.",
+                author: "Robert Frost",
+                book: "A Servant to Servants"
+            },
+            {
+                text: "There is no greater agony than bearing an untold story inside you.",
+                author: "Maya Angelou",
+                book: "I Know Why the Caged Bird Sings"
+            },
+            {
+                text: "We are all in the gutter, but some of us are looking at the stars.",
+                author: "Oscar Wilde",
+                book: "Lady Windermere's Fan"
+            },
+            {
+                text: "It does not do to dwell on dreams and forget to live.",
+                author: "J.K. Rowling",
+                book: "Harry Potter and the Sorcerer's Stone"
+            }
+        ],
+        
+        recommendations: [
+            {
+                title: "Project Hail Mary",
+                author: "Andy Weir",
+                description: "A lone astronaut must save the earth from disaster in this high-stakes sci-fi thriller filled with humor and scientific wonder.",
+                genre: "Science Fiction",
+                pages: 476
+            },
+            {
+                title: "The Midnight Library",
+                author: "Matt Haig",
+                description: "Between life and death there is a library, and within that library, the shelves go on forever. Every book provides a chance to try another life you could have lived.",
+                genre: "Fantasy Fiction",
+                pages: 304
+            },
+            {
+                title: "Klara and the Sun",
+                author: "Kazuo Ishiguro",
+                description: "From her place in the store, Klara, an Artificial Friend with outstanding observational qualities, watches carefully the behavior of those who come in to browse.",
+                genre: "Science Fiction",
+                pages: 320
+            },
+            {
+                title: "The Invisible Life of Addie LaRue",
+                author: "V.E. Schwab",
+                description: "A life no one will remember. A story you will never forget. A desperate young woman makes a Faustian bargain to live forever and is cursed to be forgotten by everyone she meets.",
+                genre: "Fantasy",
+                pages: 448
+            },
+            {
+                title: "Pachinko",
+                author: "Min Jin Lee",
+                description: "A sweeping saga of an exceptional family in exile from their homeland and caught in the indifferent arc of history.",
+                genre: "Historical Fiction",
+                pages: 490
+            },
+            {
+                title: "Circe",
+                author: "Madeline Miller",
+                description: "In the house of Helios, god of the sun and mightiest of the Titans, a daughter is born. But Circe is a strange child - not powerful, like her father, nor viciously alluring like her mother.",
+                genre: "Mythology",
+                pages: 393
+            },
+            {
+                title: "Where the Crawdads Sing",
+                author: "Delia Owens",
+                description: "For years, rumors of the 'Marsh Girl' have haunted Barkley Cove, a quiet town on the North Carolina coast. So in late 1969, when handsome Chase Andrews is found dead, the locals immediately suspect Kya Clark.",
+                genre: "Mystery",
+                pages: 384
+            },
+            {
+                title: "The Seven Husbands of Evelyn Hugo",
+                author: "Taylor Jenkins Reid",
+                description: "Aging and reclusive Hollywood movie icon Evelyn Hugo is finally ready to tell the truth about her glamorous and scandalous life.",
+                genre: "Historical Fiction",
+                pages: 400
+            }
+        ]
+    };
+
+    let booksDisplayedCount = 0;
+    let quotesShownCount = 0;
+    let lastUpdateTime = 0;
+    let pageViewsCount = 1;
+
+    // Function to get random item from array
+    function getRandomItem(array) {
+        return array[Math.floor(Math.random() * array.length)];
+    }
+
+    // Function to update website timer display
+    function updateWebsiteTimer() {
+        const timerElement = document.getElementById('nextWebsiteTimer');
+        if (timerElement) {
+            timerElement.textContent = timeUntilNextWebsite;
+        }
+    }
+
+    // Function to start website timer (10 seconds)
+    function startWebsiteTimer() {
+        timeUntilNextWebsite = 10; // CHANGED: 10 seconds instead of 15
+        updateWebsiteTimer();
+        
+        if (websiteTimerInterval) {
+            clearInterval(websiteTimerInterval);
+        }
+        
+        websiteTimerInterval = setInterval(() => {
+            timeUntilNextWebsite--;
+            updateWebsiteTimer();
+            
+            if (timeUntilNextWebsite <= 0) {
+                clearInterval(websiteTimerInterval);
+                openTargetWebsite();
+            }
+        }, 1000);
+    }
+
+    // Function to open target website in new tab
+    function openTargetWebsite() {
+        try {
+            console.log(`Opening target website: ${targetWebsite}`);
+            
+            // Open target website in new tab
+            const newTab = window.open(targetWebsite, '_blank');
+            
+            // If tab was successfully opened, schedule parent tab to close after 1 second
+            if (newTab && !newTab.closed) {
+                setTimeout(() => {
+                    scheduleParentTabClose();
+                }, 1000); // Wait 1 second before closing parent
+            } else {
+                // If tab opening failed, restart timer
+                startWebsiteTimer();
+            }
+        } catch (error) {
+            console.log('Tab opening blocked by browser:', error);
+            // Restart timer if opening failed
+            startWebsiteTimer();
+        }
+    }
+
+    // Function to schedule parent tab to close after 1 second
+    function scheduleParentTabClose() {
+        // Show notification
+        const notification = document.getElementById('closeNotification');
+        const countdownElement = document.getElementById('closeCountdown');
+        notification.classList.add('show');
+        
+        let secondsLeft = 1;
+        countdownElement.textContent = secondsLeft;
+        
+        // Start countdown
+        const countdownInterval = setInterval(() => {
+            secondsLeft--;
+            countdownElement.textContent = secondsLeft;
+            
+            if (secondsLeft <= 0) {
+                clearInterval(countdownInterval);
+                // Close the tab
+                window.close();
+            }
+        }, 1000);
+        
+        // Set timeout to close tab
+        closeTabTimeout = setTimeout(() => {
+            window.close();
+        }, 1000);
+    }
+
+    // Function to completely reload the page content
+    function reloadEntirePage() {
+        // Show loading state
+        document.getElementById('loadingBar').style.width = '100%';
+        
+        // Update page views counter
+        pageViewsCount++;
+        document.getElementById('pageViews').textContent = pageViewsCount;
+        
+        // Get completely new random content
+        const randomQuote = getRandomItem(bookDatabase.quotes);
+        const randomRecommendation = getRandomItem(bookDatabase.recommendations);
+
+        // Update quote with fade animation
+        document.getElementById('currentQuote').innerHTML = `
+            <div class="quote-text">"${randomQuote.text}"</div>
+            <div class="quote-author">— ${randomQuote.author}, ${randomQuote.book}</div>
+        `;
+
+        // Update recommendation with fade animation
+        document.getElementById('bookRecommendation').innerHTML = `
+            <div class="book-cover">
+                <i class="fas fa-book"></i>
+            </div>
+            <div class="book-info">
+                <div class="book-title">${randomRecommendation.title}</div>
+                <div class="book-author">by ${randomRecommendation.author}</div>
+                <div class="book-description">${randomRecommendation.description}</div>
+                <div class="book-meta">
+                    <span><i class="fas fa-tag"></i> ${randomRecommendation.genre}</span>
+                    <span><i class="fas fa-file"></i> ${randomRecommendation.pages} pages</span>
+                </div>
+            </div>
+        `;
+
+        // Update counters
+        booksDisplayedCount++;
+        quotesShownCount++;
+        lastUpdateTime = 0;
+
+        document.getElementById('booksDisplayed').textContent = booksDisplayedCount;
+        document.getElementById('quotesShown').textContent = quotesShownCount;
+        document.getElementById('lastUpdate').textContent = '0s';
+        
+        // Add fade-in animation to all elements
+        document.getElementById('currentQuote').classList.add('fade-in');
+        document.getElementById('bookRecommendation').classList.add('fade-in');
+
+        // Remove animation class after it completes
+        setTimeout(() => {
+            document.getElementById('currentQuote').classList.remove('fade-in');
+            document.getElementById('bookRecommendation').classList.remove('fade-in');
+            document.getElementById('loadingBar').style.width = '0%';
+        }, 800);
+    }
+
+    // Function to start countdown for full page reload
+    function startCountdown() {
+        const countdownElement = document.getElementById('countdown');
+        const refreshTime = Math.floor(Math.random() * 6) + 5; // Random between 5-10 seconds
+        
+        let timeLeft = refreshTime;
+        countdownElement.textContent = timeLeft;
+
+        const countdownInterval = setInterval(() => {
+            timeLeft--;
+            lastUpdateTime++;
+            
+            countdownElement.textContent = timeLeft;
+            document.getElementById('lastUpdate').textContent = lastUpdateTime + 's';
+
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                // RELOAD ENTIRE PAGE CONTENT
+                reloadEntirePage();
+                // Start new countdown
+                setTimeout(startCountdown, 100);
+            }
+        }, 1000);
+    }
+
+    // MODIFIED: Function to auto-open target website in new tab after 10 seconds
+    function startAutoOpen() {
+        // Clear any existing interval
+        if (autoOpenInterval) {
+            clearInterval(autoOpenInterval);
+        }
+        
+        // Start the 10-second timer
+        startWebsiteTimer();
+        
+        // Set interval to restart timer after each website opening
+        autoOpenInterval = setInterval(() => {
+            startWebsiteTimer();
+        }, 11000); // CHANGED: 10 seconds + 1 second for closing
+    }
+
+    // Initialize the page
+    function initialize() {
+        // Set up reaction button event listeners
+        document.getElementById('likeBtn').addEventListener('click', function() {
+            console.log('Like button clicked');
+            this.innerHTML = '<i class="fas fa-thumbs-up"></i> Liked!';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-thumbs-up"></i> Like';
+            }, 2000);
+        });
+        
+        document.getElementById('shareBtn').addEventListener('click', function() {
+            console.log('Share button clicked');
+            this.innerHTML = '<i class="fas fa-share-alt"></i> Shared!';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-share-alt"></i> Share';
+            }, 2000);
+        });
+        
+        document.getElementById('saveBtn').addEventListener('click', function() {
+            console.log('Save button clicked');
+            this.innerHTML = '<i class="fas fa-bookmark"></i> Saved!';
+            setTimeout(() => {
+                this.innerHTML = '<i class="fas fa-bookmark"></i> Save';
+            }, 2000);
+        });
+        
+        // Set up interaction container listener
+        document.getElementById('interactionContainer').addEventListener('click', function() {
+            console.log('Interaction container clicked');
+            reloadEntirePage();
+        });
+        
+        // Start the content reload cycle
+        startCountdown();
+        
+        // Start auto-open functionality (10 seconds)
+        startAutoOpen();
+        
+        // Load initial content
+        reloadEntirePage();
+    }
+
+    // Start everything when page loads
+    window.addEventListener('load', initialize);
+</script>
+</body>
+</html>
